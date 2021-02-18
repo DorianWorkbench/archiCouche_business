@@ -9,21 +9,16 @@ export class UserRepository {
   }
 
   async fetchAll() {
-    UserSchema.find().then((users) => {
-      return users;
-    });
+    return await UserSchema.find();
   }
 
   async addUser(DTO: userAdd) {
-    const user = new UserSchema({
+    let user = new UserSchema({
       name: DTO.name,
       surname: DTO.surname,
       pseudo: DTO.pseudo,
     });
-    
-    user.save().then((user) => {
-      return user;
-    });
+    return await user.save();
   }
 
   async updateUser(DTO: userUpdate) {

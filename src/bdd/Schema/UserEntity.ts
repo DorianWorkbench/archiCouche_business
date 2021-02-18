@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 const UserSchema = new mongoose.Schema({
   pseudo: String,
   name: String,
-  surname: String,
-  rooms: [{ type: mongoose.Types.ObjectId, ref: "room" }],
+  surname: { type: String, required: true },
+  rooms: [{ type: mongoose.Types.ObjectId, ref: "Room" }],
 });
 
-export default mongoose.model("user", UserSchema);
+export default mongoose.model("User", UserSchema);
