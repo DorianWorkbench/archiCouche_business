@@ -20,6 +20,7 @@ export class UserRepository {
       surname: DTO.surname,
       pseudo: DTO.pseudo,
     });
+    
     user.save().then((user) => {
       return user;
     });
