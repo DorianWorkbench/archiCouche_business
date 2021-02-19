@@ -1,19 +1,11 @@
 import UserSchema from "../bdd/Schema/UserEntity";
-import { userGetOne, userAdd, userUpdate, userDelete } from "../DTO/UserDTO";
+import { userAdd, userDelete, userGetOne, userUpdate } from "../DTO/UserDTO";
 
 export class UserRepository {
-  async fetchOne(DTO: userGetOne) {
-    UserSchema.findOne({ _id: DTO.userId }).then((user) => {
-      return user;
-    });
-  }
+  constructor() {}
 
-  async fetchAll() {
-    return await UserSchema.find();
-  }
-
-  async addUser(DTO: userAdd) {
-    let user = new UserSchema({
+  async createUser(DTO: userAdd): Promise<any> {
+    const user = new UserSchema({
       name: DTO.name,
       surname: DTO.surname,
       pseudo: DTO.pseudo,
@@ -21,18 +13,20 @@ export class UserRepository {
     return await user.save();
   }
 
-  async updateUser(DTO: userUpdate) {
-    UserSchema.updateOne(
-      { _id: DTO.id },
-      {
-        pseudo: DTO.pseudo,
-        name: DTO.name,
-        surname: DTO.surname,
-      }
-    );
+  async getUsers(): Promise<any> {
+    return await UserSchema.find();
   }
 
-  async deleteUser(DTO: userDelete) {
-    UserSchema.updateOne({ _id: DTO.id }, DTO);
+  async getUser(DTO: userGetOne): Promise<any> {
+    return await UserSchema.findOne({ _id: DTO.userId });
+  }
+  async updateUser(DTO: userUpdate): Promise<any> {
+    return await UserSchema.updateOne(
+      { _id: DTO.id },
+      { name: DTO.name, surname: DTO.surname, pseudo: DTO.pseudo }
+    );
+  }
+  async deleteUser(DTO: userDelete): Promise<any> {
+    return await UserSchema.deleteOne({ _id: DTO.id });
   }
 }

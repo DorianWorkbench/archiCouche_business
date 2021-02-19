@@ -1,5 +1,5 @@
 export type userGetOne = {
-  userId: Number;
+  userId: String;
 };
 
 export type userAdd = {

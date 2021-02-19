@@ -1,9 +1,10 @@
-import { UserRepository } from "../Repository/userRepository";
+import { UserService } from "../Service/userService";
 import { userAdd, userGetOne, userDelete, userUpdate } from "../DTO/UserDTO";
 import { Request, Response } from "express";
+import { UserRepository } from "../Repository/userRepository";
 
 export class UserController {
-  constructor(private repository: UserRepository) {}
+  constructor(private service: UserService, private repo: UserRepository) {}
 
   async createUser(req: Request, res: Response) {
     try {
@@ -12,7 +13,7 @@ export class UserController {
         surname: req.body.surname,
         pseudo: req.body.pseudo,
       };
-      const user = await this.repository.addUser(DTO);
+      const user = await this.service.addUser(DTO);
       console.log(user);
       res.status(201).json(user);
     } catch (e) {
@@ -23,9 +24,9 @@ export class UserController {
   async getUser(req: Request, res: Response) {
     try {
       const DTO: userGetOne = {
-        userId: req.body.userId,
+        userId: req.params.userId,
       };
-      this.repository.fetchOne(DTO);
+      return res.status(200).json(await this.service.fetchOne(DTO));
     } catch (e) {
       res.sendStatus(500);
     }
@@ -39,7 +40,7 @@ export class UserController {
         name: req.body.name,
         surname: req.body.surname,
       };
-      this.repository.updateUser(DTO);
+      return res.status(200).json(await this.service.updateUser(DTO));
     } catch (e) {
       res.sendStatus(500);
     }
@@ -47,8 +48,8 @@ export class UserController {
 
   async getAllUser(res: Response) {
     try {
-      const users = await this.repository.fetchAll();
-      res.status(200).json(users);
+      const users = await this.service.fetchAll();
+      return res.status(200).json(users);
     } catch (e) {
       res.sendStatus(500);
     }
