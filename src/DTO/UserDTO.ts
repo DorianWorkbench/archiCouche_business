@@ -1,5 +1,5 @@
 export type userGetOne = {
-  userId: String;
+  userId: string;
 };
 
 export type userAdd = {
@@ -8,7 +8,7 @@ export type userAdd = {
   pseudo: string;
 };
 export type userUpdate = {
-  id: number;
+  id: string;
   name: string;
   surname: string;
   pseudo: string;
