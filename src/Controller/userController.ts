@@ -1,8 +1,7 @@
 import { UserService } from "../Service/userService";
 import { userAdd, userGetOne, userDelete, userUpdate } from "../DTO/UserDTO";
 import { Request, Response } from "express";
-import { UserRepository } from "../Repository/userRepository";
-
+import Joi from "joi";
 export class UserController {
   constructor(private service: UserService) {}
 
@@ -13,11 +12,22 @@ export class UserController {
         surname: req.body.surname,
         pseudo: req.body.pseudo,
       };
+      const verif = Joi.object({
+        name:Joi.string().required(),
+        surname: Joi.string().required(),
+        pseudo: Joi.string().required()
+      });
+
+      console.log("verif joi " + verif.validate(DTO).error);
+
+      if(verif.validate(DTO).error){
+        return res.status(400).json({err:"Erreur sur les attributs passés par la requête post"});
+      }
       const user = await this.service.addUser(DTO);
-      console.log(user);
-      res.status(201).json(user);
+
+      return res.status(201).json(user);
     } catch (e) {
-      res.sendStatus(500);
+      return res.sendStatus(500);
     }
   }
 
@@ -51,7 +61,7 @@ export class UserController {
       const users = await this.service.fetchAll();
       return res.status(200).json(users);
     } catch (e) {
-      res.status(500);
+      return res.sendStatus(500);
     }
   }
 }

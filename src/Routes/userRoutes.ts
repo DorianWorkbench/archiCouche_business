@@ -4,7 +4,7 @@ import { UserController } from "../Controller/userController";
 import { UserRepository } from "../Repository/userRepository";
 import { UserService } from "../Service/userService";
 
-export function factoryRoutes(service: UserService) {
+export function factoryRoutesUser(service: UserService) {
   const router = express.Router();
   const userController = new UserController(service);
 
