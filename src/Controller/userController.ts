@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { UserRepository } from "../Repository/userRepository";
 
 export class UserController {
-  constructor(private service: UserService, private repo: UserRepository) {}
+  constructor(private service: UserService) {}
 
   async createUser(req: Request, res: Response) {
     try {
@@ -51,7 +51,7 @@ export class UserController {
       const users = await this.service.fetchAll();
       return res.status(200).json(users);
     } catch (e) {
-      res.sendStatus(500);
+      res.status(500);
     }
   }
 }
