@@ -1,5 +1,5 @@
 export type AddRefund = {
-    name:string,
-    amount:number,
-    idRoom:string
-}
+  name: string;
+  amount: number;
+  idRoom: string;
+};

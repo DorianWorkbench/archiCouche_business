@@ -13,15 +13,17 @@ export class UserController {
         pseudo: req.body.pseudo,
       };
       const verif = Joi.object({
-        name:Joi.string().required(),
+        name: Joi.string().required(),
         surname: Joi.string().required(),
-        pseudo: Joi.string().required()
+        pseudo: Joi.string().required(),
       });
 
       console.log("verif joi " + verif.validate(DTO).error);
 
-      if(verif.validate(DTO).error){
-        return res.status(400).json({err:"Erreur sur les attributs passés par la requête post"});
+      if (verif.validate(DTO).error) {
+        return res
+          .status(400)
+          .json({ err: "Erreur sur les attributs passés par la requête post" });
       }
       const user = await this.service.addUser(DTO);
 

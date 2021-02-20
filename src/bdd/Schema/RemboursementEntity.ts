@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const RemboursementSchema = new mongoose.Schema({
-  name:String,
+  name: String,
   amount: Number,
   idRoom: { type: mongoose.Types.ObjectId, ref: "Room" },
 });

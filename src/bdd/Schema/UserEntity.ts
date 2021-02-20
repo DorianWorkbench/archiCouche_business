@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
 const UserSchema = new mongoose.Schema({
   pseudo: String,
@@ -7,4 +7,11 @@ const UserSchema = new mongoose.Schema({
   rooms: [{ type: mongoose.Types.ObjectId, ref: "Room" }],
 });
 
-export default mongoose.model("User", UserSchema);
+type IUser = {
+  pseudo: string;
+  name: string;
+  surname: string;
+  rooms: { type: mongoose.Types.ObjectId; ref: "Room" };
+};
+
+export default mongoose.model<IUser & Document>("User", UserSchema);

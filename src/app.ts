@@ -20,7 +20,7 @@ bdd
   });
 
 const userService: UserService = new UserService(new UserRepository());
-const refundService:RefundService = new RefundService(new RefundRepository());
+const refundService: RefundService = new RefundService(new RefundRepository());
 
 export const app = express();
 
