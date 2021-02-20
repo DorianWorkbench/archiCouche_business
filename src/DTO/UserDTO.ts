@@ -8,10 +8,10 @@ export type userAdd = {
   pseudo: string;
 };
 export type userUpdate = {
-  id: string;
-  name: string;
-  surname: string;
-  pseudo: string;
+  id?: string;
+  name?: string;
+  surname?: string;
+  pseudo?: string;
 };
 export type userDelete = {
   id: number;

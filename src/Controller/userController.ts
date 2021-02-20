@@ -12,6 +12,7 @@ export class UserController {
         surname: req.body.surname,
         pseudo: req.body.pseudo,
       };
+
       const verif = Joi.object({
         name: Joi.string().required(),
         surname: Joi.string().required(),

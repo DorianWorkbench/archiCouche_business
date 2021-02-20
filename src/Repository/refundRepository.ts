@@ -1,10 +1,10 @@
 import refundSchema from "../bdd/Schema/RemboursementEntity";
-import { AddRefund } from "../DTO/RefundDTO";
+import { AddRefundDTO } from "../DTO/RefundDTO";
 
 export class RefundRepository {
   constructor() {}
 
-  async createRefund(DTO: AddRefund) {
+  async createRefund(DTO: AddRefundDTO) {
     // todo: Check how to implement refund to a Room
     const refund = new refundSchema({
       name: DTO.name,

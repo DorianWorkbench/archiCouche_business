@@ -1,4 +1,4 @@
-export type AddRefund = {
+export type AddRefundDTO = {
   name: string;
   amount: number;
   idRoom: string;
