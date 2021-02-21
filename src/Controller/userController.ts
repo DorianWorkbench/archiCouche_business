@@ -48,7 +48,7 @@ export class UserController {
   async updateUser(req: Request, res: Response) {
     try {
       const DTO: userUpdate = {
-        id: req.body.userid,
+        id: req.body.userId,
         pseudo: req.body.pseudo,
         name: req.body.name,
         surname: req.body.surname,

@@ -13,7 +13,7 @@ export class UserRepository {
     });
 
     const save = await user.save();
-    const result = new User(save._id, save.name, save.surname, save.rooms);
+    const result = new User(save._id, save.name, save.surname, save.pseudo);
 
     return result;
   }
@@ -25,7 +25,13 @@ export class UserRepository {
 
     for (const userR of users) {
       userList.push(
-        new User(userR._id, userR.name, userR.surname, userR.rooms)
+        new User(
+          userR._id,
+          userR.name,
+          userR.surname,
+          userR.pseudo,
+          userR.rooms
+        )
       );
     }
     return userList;
@@ -38,25 +44,43 @@ export class UserRepository {
       userR?._id!,
       userR?.name!,
       userR?.surname!,
-      userR?.pseudo!
+      userR?.pseudo!,
+      userR?.rooms!
     );
 
     return result;
   }
 
   async updateUser(DTO: userUpdate): Promise<User> {
-    const userUpdate = await UserSchema.updateOne(
-      { _id: DTO.id },
-      { name: DTO.name, surname: DTO.surname, pseudo: DTO.pseudo }
-    );
-    const result = new User(
-      userUpdate._id,
-      userUpdate.name,
-      userUpdate.surname,
-      userUpdate.rooms
-    );
+    let userF = await UserSchema.findOne({ _id: DTO.id });
+
+    // Updating user by save mongoose method
+
+    userF!.name = DTO.name!;
+    userF!.surname = DTO.surname!;
+    userF!.pseudo = DTO.pseudo!;
+
+    // For room update
+    if (DTO.rooms) {
+      userF!.rooms.push(DTO.rooms!);
+    }
+
+    await userF!.save();
+
+    console.log(userF);
+
+    const DTOuser: userGetOne = {
+      userId: DTO.id!,
+    };
+
+    const result = await this.getUser(DTOuser);
+
+    console.log("after update");
+    console.log(result);
+
     return result;
   }
+
   async deleteUser(DTO: userDelete): Promise<User> {
     const deleteUser = await UserSchema.deleteOne({ _id: DTO.id });
 
