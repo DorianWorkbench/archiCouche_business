@@ -2,14 +2,17 @@ import RoomSchema from "../bdd/Schema/SalonEntity";
 import { CreateRoomDTO } from "../DTO/RoomDTO";
 import { userGetOne, userUpdate } from "../DTO/UserDTO";
 import { Room } from "../Entity/Room";
-import { User } from "../Entity/User";
-import { UserService } from "../Service/userService";
+
 import { UserRepository } from "./userRepository";
 
 export class RoomRepository {
   constructor(private repo: UserRepository) {}
 
-  async createRoom(DTO: CreateRoomDTO, DTOuser: userGetOne): Promise<Room> {
+  async createRoom(
+    DTO: CreateRoomDTO,
+    DTOuser: userGetOne,
+    DTOuserUpdate: userUpdate
+  ): Promise<Room> {
     const cRoom = new RoomSchema();
     cRoom.name = DTO.name;
 
@@ -17,8 +20,15 @@ export class RoomRepository {
     cRoom.users.push(DTOuser.userId);
 
     const sRoom = await cRoom.save();
+    const userToR = await this.repo.getUser(DTOuser);
+    const rUser = [userToR];
 
-    const rUser = [await this.repo.getUser(DTOuser)];
+    DTOuserUpdate.rooms = sRoom._id;
+    DTOuserUpdate.name = userToR.getName();
+    DTOuserUpdate.surname = userToR.getSurname();
+    DTOuserUpdate.pseudo = userToR.getPseudo();
+
+    const updateUser = await this.repo.updateUser(DTOuserUpdate);
 
     const room = new Room(sRoom._id, sRoom.name, rUser);
 

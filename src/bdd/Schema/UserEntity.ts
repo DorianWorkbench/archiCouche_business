@@ -11,7 +11,7 @@ type IUser = {
   pseudo: string;
   name: string;
   surname: string;
-  rooms: { type: mongoose.Types.ObjectId; ref: "Room" };
+  rooms: [string];
 };
 
 export default mongoose.model<IUser & Document>("User", UserSchema);

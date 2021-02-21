@@ -12,6 +12,7 @@ export type userUpdate = {
   name?: string;
   surname?: string;
   pseudo?: string;
+  rooms?: string;
 };
 export type userDelete = {
   id: number;

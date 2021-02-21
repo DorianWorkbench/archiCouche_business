@@ -3,10 +3,9 @@ export class User {
     private id: string,
     private name: string,
     private surname: string,
-    private rooms: any
-  ) {
-    this.rooms = [];
-  }
+    private pseudo: string,
+    private rooms: Array<String> = []
+  ) {}
 
   getId(): string {
     return this.id;
@@ -19,5 +18,8 @@ export class User {
   }
   getRooms(): Array<any> {
     return this.rooms;
+  }
+  getPseudo(): string {
+    return this.pseudo;
   }
 }

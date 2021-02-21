@@ -2,7 +2,7 @@ import { RoomService } from "../Service/roomService";
 import { Request, Response } from "express";
 import Joi, { string } from "joi";
 
-import { userGetOne } from "../DTO/UserDTO";
+import { userGetOne, userUpdate } from "../DTO/UserDTO";
 import { CreateRoomDTO } from "../DTO/RoomDTO";
 
 export class RoomController {
@@ -15,6 +15,9 @@ export class RoomController {
       };
       const DTOuser: userGetOne = {
         userId: req.body.userId,
+      };
+      const DTOuserUpdate: userUpdate = {
+        id: req.body.userId,
       };
       const verifRoom: Joi.ObjectSchema = Joi.object({
         name: string().required(),
@@ -33,7 +36,12 @@ export class RoomController {
           .status(400)
           .json({ err: "Vous n'avez pas rentré des attributs valides" });
       }
-      const room = await this.service.createRoom(DTOroom, DTOuser);
+
+      const room = await this.service.createRoom(
+        DTOroom,
+        DTOuser,
+        DTOuserUpdate
+      );
 
       return res.status(200).json(room);
     } catch (e) {
